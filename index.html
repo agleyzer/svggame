@@ -9,6 +9,8 @@
     </svg>
     <a style="font-size: 200%;" id="link" href="#" download="GameScreenCapture.svg">Download SVG of current game</a>
     <script>
+        var svg1jump = false;
+
         function moveY(id, dist) {
             const element = document.getElementById(id);
             const y = parseFloat(element.getAttributeNS(null, 'cy'));
@@ -18,6 +20,12 @@
             const element = document.getElementById(id);
             const x = parseFloat(element.getAttributeNS(null, 'cx'));
             element.setAttributeNS(null, 'cx', x + dist);
+        }
+        function changeRad(id, amt) {
+            const element = document.getElementById(id);
+            const r = parseFloat(element.getAttributeNS(null, 'r'));
+            element.setAttributeNS(null, 'r', r + amt);
+            console.log("new size", element.getAttributeNS(null, 'r'));
         }
         function svgExp() {
             //get svg element.
@@ -46,6 +54,7 @@
             //you can download svg file by right click menu.
         }
         document.addEventListener('keydown', function (ev) {
+            console.log(event.key);
             switch (event.key) {
                 case "ArrowLeft":
                     moveX('svg1', -10);
@@ -58,6 +67,18 @@
                     break;
                 case "ArrowDown":
                     moveY('svg1', 10);
+                    break;
+                case " ":
+                    if (svg1jump) {
+                        break;
+                    }
+
+                    svg1jump = true;
+                    changeRad('svg1', 20);
+                    setTimeout(function () {
+                        changeRad('svg1', -20);
+                        svg1jump = false;
+                    }, 1000);
                     break;
             }
         })
