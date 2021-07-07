@@ -11,22 +11,13 @@
     <script>
         var svg1jump = false;
 
-        function moveY(id, dist) {
+        function changeAttr(id, property, amount) {
             const element = document.getElementById(id);
-            const y = parseFloat(element.getAttributeNS(null, 'cy'));
-            element.setAttributeNS(null, 'cy', y + dist);
+            const value = parseFloat(element.getAttributeNS(null, property));
+            element.setAttributeNS(null, property, value + amount);
+            console.log(id + "." + property + ":", element.getAttributeNS(null, property));
         }
-        function moveX(id, dist) {
-            const element = document.getElementById(id);
-            const x = parseFloat(element.getAttributeNS(null, 'cx'));
-            element.setAttributeNS(null, 'cx', x + dist);
-        }
-        function changeRad(id, amt) {
-            const element = document.getElementById(id);
-            const r = parseFloat(element.getAttributeNS(null, 'r'));
-            element.setAttributeNS(null, 'r', r + amt);
-            console.log("new size", element.getAttributeNS(null, 'r'));
-        }
+
         function svgExp() {
             //get svg element.
             var svg = document.getElementById("svg");
@@ -57,16 +48,16 @@
             console.log(event.key);
             switch (event.key) {
                 case "ArrowLeft":
-                    moveX('svg1', -10);
+                    changeAttr('svg1', 'cx', -10);
                     break;
                 case "ArrowRight":
-                    moveX('svg1', 10);
+                    changeAttr('svg1', 'cx', 10);
                     break;
                 case "ArrowUp":
-                    moveY('svg1', -10);
+                    changeAttr('svg1', 'cy', -10);
                     break;
                 case "ArrowDown":
-                    moveY('svg1', 10);
+                    changeAttr('svg1', 'cy', 10);
                     break;
                 case " ":
                     if (svg1jump) {
@@ -74,9 +65,9 @@
                     }
 
                     svg1jump = true;
-                    changeRad('svg1', 20);
+                    changeAttr('svg1', 'r', 20);
                     setTimeout(function () {
-                        changeRad('svg1', -20);
+                        changeAttr('svg1', 'r', -20);
                         svg1jump = false;
                     }, 1000);
                     break;
